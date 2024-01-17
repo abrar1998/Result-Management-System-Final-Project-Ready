@@ -1,0 +1,33 @@
+﻿@model RMS.Models.FeeDTO
+
+<br />
+<div class="text-center">
+    <h3 class="alert alert-primary">Edit Fee Details</h3>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="EditFee">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="TotalFee" class="control-label"></label>
+                <input asp-for="TotalFee" class="form-control" />
+                <span asp-validation-for="TotalFee" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StudentId" class="control-label"></label>
+                <input asp-for="StudentId" class="form-control" readonly />
+                <span asp-validation-for="StudentId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Update Fee Details" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+

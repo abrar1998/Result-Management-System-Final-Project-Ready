@@ -1,0 +1,62 @@
+﻿@model IEnumerable<RMS.Models.Course>
+<hr />
+<br />
+<div class="text-center">
+    <h3 class="alert alert-primary">List Of All Courses</h3>
+</div>
+
+<p>
+    <a asp-action="CourseRegistration" asp-controller="Courses" class="btn btn-primary"> Add New Course</a>
+</p>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CourseId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CourseName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CourseFee)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CoursePdf)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CourseId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CourseName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CourseFee)
+                </td>
+                <td>
+                    
+                    @if (!string.IsNullOrEmpty(item.CoursePdf))
+                    {
+                        <a class="btn btn-outline-info" href="@Url.Action("DownloadPdf", "Courses", new { courseId = item.CourseId })">Download PDF</a>
+                    }
+                    else
+                    {
+                        <span>No PDF available</span>
+                    }
+                </td>
+                <td>
+             
+                    <a class="btn btn-outline-info" asp-action="Edit"    asp-controller="Courses" asp-route-id="@item.CourseId">Edit Course</a>
+                    <a class="btn btn-outline-info" asp-action="Details" asp-controller="Courses" asp-route-id="@item.CourseId">Course Details</a>
+                    <a class="btn btn-outline-danger" asp-action="Delete"  asp-controller="Courses" asp-route-id="@item.CourseId">Delete Course</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,67 @@
+﻿<br />
+<div class="text-md-center">
+    <h4 class="alert alert-primary">Admin DashBoard</h4>
+</div>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    Course Registration
+                </div>
+                <div class="card-body">
+                    <p class="card-text">Register a new course.</p>
+                    <a href="@Url.Action("CourseRegistration", "Courses")" class="btn btn-primary">Go to Course Registration</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    Student Registration
+                </div>
+                <div class="card-body">
+                    <p class="card-text">Register a new Student.</p>
+                    <a href="@Url.Action("StudentRegistration", "Student")" class="btn btn-success">Go to Student Registration</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header bg-info text-white">
+                    Get Course
+                </div>
+                <div class="card-body">
+                    <p class="card-text">Get information about Course.</p>
+                    <a href="@Url.Action("GetCourseList", "Courses")" class="btn btn-info">Go to Get Course</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header bg-info text-white">
+                    Get All Students
+                </div>
+                <div class="card-body">
+                    <p class="card-text">Get information about Students.</p>
+                    <a href="@Url.Action("ShowStudents", "Student")" class="btn btn-info">Go to Students</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header bg-info text-white">
+                    Get Fee Detail List
+                </div>
+                <div class="card-body">
+                    <p class="card-text">Get information about Fee Details.</p>
+                    <a href="@Url.Action("CheckFee", "Fees")" class="btn btn-info">Go to Get Fee List</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+  
+        <!-- Add more cards for additional links as needed -->
+    </div>
+</div>
