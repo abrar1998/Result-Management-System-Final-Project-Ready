@@ -66,29 +66,47 @@ namespace RMS.Controllers
         }
 
         [HttpGet]
+        /*      public IActionResult EditFee(int id)
+              {
+                  var feeToedit = feeRepo.GetFeeDetailsAsModelById(id);
+                  var newDto = new FeeDTO()
+                  {
+                      StudentId = feeToedit.StudentId,
+                      TotalFee = feeToedit.TotalFee,
+                      Description = feeToedit.Description
+                  };
+                  return View(newDto); 
+              }
+      */
+
         public IActionResult EditFee(int id)
         {
             var feeToedit = feeRepo.GetFeeDetailsAsModelById(id);
-            var newDto = new FeeDTO()
-            {
-                StudentId = feeToedit.StudentId,
-                TotalFee = feeToedit.TotalFee,
-                Description = feeToedit.Description
-            };
-            return View(newDto); 
+          
+            return View(feeToedit);
         }
 
+
         [HttpPost]
-        public IActionResult EditFee(int id, FeeDTO fdto)
+        public IActionResult EditFee(int id, FeeDetails fee)
         {
-            feeRepo.FeeToUpdate(fdto);
+            feeRepo.FeeToUpdate(fee);
             return RedirectToAction("GetSingleStudent", "Student", new { id = id });
         }
 
         [HttpGet]
         public IActionResult DeleteFee(int id)
         {
-            return View();
+            var deldata = feeRepo.GetFeeDetailsAsModelById(id);
+            return View(deldata);
+        }
+
+        [HttpPost]
+        public IActionResult DeleteFee(int id, FeeDetails feedelte)
+        {
+            var data = feeRepo.GetFeeDetailsAsModelById(id);
+            feeRepo.FeeDelete(data);
+            return RedirectToAction("GetSingleStudent", "Student", new {id = data.StudentId });
         }
 
 

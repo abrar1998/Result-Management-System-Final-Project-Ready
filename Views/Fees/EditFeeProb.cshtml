@@ -1,23 +1,13 @@
-﻿@model RMS.Models.FeeDetails
+﻿@model RMS.Models.FeeDTO
 
-@{
-    ViewData["Title"] = "EditFee";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
-
-<h1>EditFee</h1>
-
-<h4>FeeDetails</h4>
-<hr />
+<br />
+<div class="text-center">
+    <h3 class="alert alert-primary">Edit Fee Details</h3>
+</div>
 <div class="row">
     <div class="col-md-4">
         <form asp-action="EditFee">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-          @*   <div class="form-group">
-                <label asp-for="Id" class="control-label"></label>
-                <input asp-for="Id" class="form-control" />
-                <span asp-validation-for="Id" class="text-danger"></span>
-            </div> *@
             <div class="form-group">
                 <label asp-for="TotalFee" class="control-label"></label>
                 <input asp-for="TotalFee" class="form-control" />
@@ -34,13 +24,10 @@
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Update Fee Details" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 

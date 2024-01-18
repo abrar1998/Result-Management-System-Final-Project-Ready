@@ -11,7 +11,9 @@ namespace RMS.FeeRepository
         FeeDetails GetFeeDetailsAsModelById(int id);
         public bool FeeIdOfStudentExists(int id);
 
-        void FeeToUpdate(FeeDTO fee);
+        void FeeToUpdate(FeeDetails ufee);
+
+        void FeeDelete(FeeDetails deleteFee);
         
     }
 }

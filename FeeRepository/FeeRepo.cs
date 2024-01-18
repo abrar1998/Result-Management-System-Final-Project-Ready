@@ -19,22 +19,49 @@ namespace RMS.FeeRepository
             context.SaveChanges();
         }
 
+        public void FeeDelete(FeeDetails deleteFee)
+        {
+
+            context.feeDetails.Remove(deleteFee);
+            context.SaveChanges();
+          /*  try
+            {
+                var data = context.feeDetails.Where(f=>f.Id == deleteFee.Id).FirstOrDefault();
+                context.feeDetails.Remove(deleteFee);
+                context.SaveChanges();
+            }
+            catch(DbUpdateConcurrencyException ex)
+            {
+                var entry = ex.Entries.Single();
+                var databaseValues = entry.GetDatabaseValues();
+                if (databaseValues != null)
+                {
+                    // Update the entry's original values with the values from the database
+                    entry.OriginalValues.SetValues(databaseValues);
+
+                    // Try deleting again
+                    context.SaveChanges();
+                }
+            }
+*/
+        }
+
         public bool FeeIdOfStudentExists(int id)
         {
             return context.feeDetails.Any(fee => fee.StudentId == id);
         }
 
-        public void FeeToUpdate(FeeDTO fee)
+        public void FeeToUpdate(FeeDetails ufee)
         {
-            var dataToUpdate = new FeeDetails()
+           /* var dataToUpdate = new FeeDetails()
             {
 
                 TotalFee = fee.TotalFee,
                 StudentId = fee.StudentId,
                 Description = fee.Description
 
-            };
-            context.feeDetails.Update(dataToUpdate);
+            };*/
+            context.feeDetails.Update(ufee);
             context.SaveChanges();
         }
 
@@ -46,7 +73,7 @@ namespace RMS.FeeRepository
 
         public FeeDetails GetFeeDetailsAsModelById(int id)
         {
-            var editfee = context.feeDetails.Where(f=>f.StudentId == id).FirstOrDefault();
+            var editfee = context.feeDetails.Where(f=>f.Id == id).FirstOrDefault();
             return editfee;
         }
 

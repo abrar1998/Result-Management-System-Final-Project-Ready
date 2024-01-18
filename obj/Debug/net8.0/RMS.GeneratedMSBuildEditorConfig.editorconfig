@@ -50,12 +50,20 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmVlc1xDaGVja0ZlZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/C-Sharp/.NET7/RMS/Views/Fees/DeleteFee.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmVlc1xEZWxldGVGZWUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/C-Sharp/.NET7/RMS/Views/Fees/DepositFee.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmVlc1xEZXBvc2l0RmVlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/C-Sharp/.NET7/RMS/Views/Fees/EditFee.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmVlc1xFZGl0RmVlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/C-Sharp/.NET7/RMS/Views/Fees/EditFeeProb.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmVlc1xFZGl0RmVlUHJvYi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/C-Sharp/.NET7/RMS/Views/Fees/FeeNotFound.cshtml]
