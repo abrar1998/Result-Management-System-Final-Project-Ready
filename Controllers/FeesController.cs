@@ -66,23 +66,10 @@ namespace RMS.Controllers
         }
 
         [HttpGet]
-        /*      public IActionResult EditFee(int id)
-              {
-                  var feeToedit = feeRepo.GetFeeDetailsAsModelById(id);
-                  var newDto = new FeeDTO()
-                  {
-                      StudentId = feeToedit.StudentId,
-                      TotalFee = feeToedit.TotalFee,
-                      Description = feeToedit.Description
-                  };
-                  return View(newDto); 
-              }
-      */
-
         public IActionResult EditFee(int id)
         {
             var feeToedit = feeRepo.GetFeeDetailsAsModelById(id);
-          
+            
             return View(feeToedit);
         }
 
@@ -91,7 +78,7 @@ namespace RMS.Controllers
         public IActionResult EditFee(int id, FeeDetails fee)
         {
             feeRepo.FeeToUpdate(fee);
-            return RedirectToAction("GetSingleStudent", "Student", new { id = id });
+            return RedirectToAction("GetSingleStudent", "Student", new { id = fee.StudentId });
         }
 
         [HttpGet]

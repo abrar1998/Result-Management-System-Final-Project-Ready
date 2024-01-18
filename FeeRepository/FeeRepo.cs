@@ -53,14 +53,7 @@ namespace RMS.FeeRepository
 
         public void FeeToUpdate(FeeDetails ufee)
         {
-           /* var dataToUpdate = new FeeDetails()
-            {
-
-                TotalFee = fee.TotalFee,
-                StudentId = fee.StudentId,
-                Description = fee.Description
-
-            };*/
+           
             context.feeDetails.Update(ufee);
             context.SaveChanges();
         }
