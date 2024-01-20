@@ -1,112 +1,116 @@
 ﻿@model IEnumerable<RMS.Models.Student>
+<br />
+<div class="text-md-center">
+    <h4 class="alert alert-primary">Details of Single Studen</h4>
+</div>
 
-@{
-    ViewData["Title"] = "GetSingleStudent";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
-
-<h3 class="text-md-center">Details of Single Student</h3>
+<hr />
 
 
-<table class="table table-bordered">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.StudentId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.StudentName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Parentage)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.StudentAge)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.StudentEmail)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.StudentPhone)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Adhaar)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DOB)
-            </th>
 
-            <th>
-                @Html.DisplayNameFor(model => model.Course)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RegistrationDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.StudentPhoto)
-            </th>
-           
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
+
+    <table class="table table-sm table-bordered table-responsive-sm table-hover" >
+        <thead class="thead-dark">
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.StudentId)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.StudentName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Parentage)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.StudentAge)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.StudentEmail)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.StudentPhone)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Adhaar)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DOB)
-                </td>
+                <th>
+                    @Html.DisplayNameFor(model => model.StudentId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.StudentName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Parentage)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.StudentAge)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.StudentEmail)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.StudentPhone)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Adhaar)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DOB)
+                </th>
 
-                <td>
-                    @Html.DisplayFor(modelItem => item.CourseList.CourseName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.RegistrationDate)
-                </td>
+                <th>
+                    @Html.DisplayNameFor(model => model.Course)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.RegistrationDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.StudentPhoto)
+                </th>
 
-                <td>
-
-                    <img src="~/Images/@item.StudentPhoto" class="img-fluid" width="100" height="100" asp-append-version="true" />
-                </td>
-
-                <td>
-                    <a class="btn btn-primary" asp-action="Edit" asp-controller="Student" asp-route-id="@item.StudentId">Edit</a>
-                    <hr />
-                    <a class="btn btn-danger" asp-action="Delete" asp-controller="Student" asp-route-id="@item.StudentId">Delete</a>
-                    <hr />
-                    <a class="btn btn-primary" asp-action="DownloadCourse" asp-controller="Student" asp-route-id="@item.StudentId">Course PDF</a>
-
-
-                </td>
-                <td>
-                    <a class="btn btn-primary" asp-action="DepositFee" asp-controller="Fees" asp-route-id="@item.StudentId">Deposit Fee</a>
-                    <hr />
-                    <a class="btn btn-outline-warning" asp-action="GetFeeListOfSignleStudents" asp-controller="Fees" asp-route-id="@item.StudentId">Check Fee Details</a>
-                </td>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StudentId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StudentName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Parentage)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StudentAge)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StudentEmail)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StudentPhone)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Adhaar)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DOB)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CourseList.CourseName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RegistrationDate)
+                    </td>
+
+                    <td>
+
+                        <img src="~/Images/@item.StudentPhoto" class="img-fluid" width="100" height="100" asp-append-version="true" />
+                    </td>
+
+                    <td>
+                        <a class="btn btn-primary" asp-action="Edit" asp-controller="Student" asp-route-id="@item.StudentId">Edit</a>
+                        <hr />
+                        <a class="btn btn-danger" asp-action="Delete" asp-controller="Student" asp-route-id="@item.StudentId">Delete</a>
+                        <hr />
+                        <a class="btn btn-primary" asp-action="DownloadCourse" asp-controller="Student" asp-route-id="@item.StudentId">Course PDF</a>
+
+
+                    </td>
+                    <td>
+                        <a class="btn btn-primary" asp-action="DepositFee" asp-controller="Fees" asp-route-id="@item.StudentId">Deposit Fee</a>
+                        <hr />
+                        <a class="btn btn-outline-warning" asp-action="GetFeeListOfSignleStudents" asp-controller="Fees" asp-route-id="@item.StudentId">Check Fee Details</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+
+
 <br />
 <hr />
 <div class="container-fluid">
