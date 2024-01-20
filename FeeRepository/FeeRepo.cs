@@ -24,26 +24,7 @@ namespace RMS.FeeRepository
 
             context.feeDetails.Remove(deleteFee);
             context.SaveChanges();
-          /*  try
-            {
-                var data = context.feeDetails.Where(f=>f.Id == deleteFee.Id).FirstOrDefault();
-                context.feeDetails.Remove(deleteFee);
-                context.SaveChanges();
-            }
-            catch(DbUpdateConcurrencyException ex)
-            {
-                var entry = ex.Entries.Single();
-                var databaseValues = entry.GetDatabaseValues();
-                if (databaseValues != null)
-                {
-                    // Update the entry's original values with the values from the database
-                    entry.OriginalValues.SetValues(databaseValues);
-
-                    // Try deleting again
-                    context.SaveChanges();
-                }
-            }
-*/
+         
         }
 
         public bool FeeIdOfStudentExists(int id)
@@ -82,6 +63,10 @@ namespace RMS.FeeRepository
             return data;
         }
 
-
+        public IEnumerable<FeeDetails> GetFeeListByOfStudetId(int id)
+        {
+            var data = context.feeDetails.Where(f=>f.StudentId == id).ToList();
+            return data;
+        }
     }
 }

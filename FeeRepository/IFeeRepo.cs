@@ -6,6 +6,8 @@ namespace RMS.FeeRepository
     {
         void AddFee(FeeDetails fee);// Add Fee Details
         IEnumerable<FeeDetails> GetFeeList();
+        IEnumerable<FeeDetails> GetFeeListByOfStudetId(int id);
+
         FeeDetails GetFeeDetailsOfSingleStudent(int id); // return data as model
         FeeDetails GetFeeDetailsAsModel();
         FeeDetails GetFeeDetailsAsModelById(int id); //this will return us FeeDetails data as a model

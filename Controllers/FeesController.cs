@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using RMS.FeeReceiptRepository;
 using RMS.FeeRepository;
 using RMS.Models;
 
@@ -7,10 +8,12 @@ namespace RMS.Controllers
     public class FeesController : Controller
     {
         private readonly IFeeRepo feeRepo;
+        private readonly IFeeReceiptService feeReceiptService;
 
-        public FeesController(IFeeRepo feeRepo)
+        public FeesController(IFeeRepo feeRepo, IFeeReceiptService feeReceiptService)
         {
             this.feeRepo = feeRepo;
+            this.feeReceiptService = feeReceiptService;
         }
 
         [HttpGet]
@@ -32,7 +35,17 @@ namespace RMS.Controllers
                 StudentId  = dto.StudentId,
             };
             feeRepo.AddFee(model);
-            return RedirectToAction("Index", "Home");
+            // Generate and save the receipt, and get the file path
+            var receiptFilePath = feeReceiptService.GenerateReceipt(model);
+            // Return a downloadable file response
+            return File(receiptFilePath, "application/pdf", "FeeReceipt.pdf");
+            //return RedirectToAction("Index", "Home");
+        }
+
+        [HttpGet]
+        public IActionResult DownloadReceipt()
+        {
+            return View();
         }
 
         [HttpGet]
@@ -44,13 +57,13 @@ namespace RMS.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetFeeListOfSignleStudents(int id)
+        public IActionResult GetFeeListOfSingleStudent(int id)
         {
 
             bool IdExists = feeRepo.FeeIdOfStudentExists(id);
             if (IdExists == true)
             {
-                var feedetail = feeRepo.GetFeeList();
+                var feedetail = feeRepo.GetFeeListByOfStudetId(id);
                 return View(feedetail);
 
             }

@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using RMS.AccountRepository;
 using RMS.DatabaseContext;
+using RMS.FeeReceiptRepository;
 using RMS.FeeRepository;
 using RMS.StudentCourseRepository;
 
@@ -18,6 +19,7 @@ namespace RMS
             builder.Services.AddTransient<IStudentRepo, StudentRepo>(); //Adding services for student repository
             builder.Services.AddTransient<ICourseRepo, CourseRepo>(); // Adding services for course repository
             builder.Services.AddTransient<IFeeRepo, FeeRepo>();  // Add services for fee repository
+            builder.Services.AddTransient<IFeeReceiptService, FeeReceiptService>();
 
             var app = builder.Build();
 
