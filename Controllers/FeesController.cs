@@ -2,6 +2,7 @@
 using RMS.FeeReceiptRepository;
 using RMS.FeeRepository;
 using RMS.Models;
+using static iText.StyledXmlParser.Jsoup.Select.Evaluator;
 
 namespace RMS.Controllers
 {
@@ -35,17 +36,32 @@ namespace RMS.Controllers
                 StudentId  = dto.StudentId,
             };
             feeRepo.AddFee(model);
-            // Generate and save the receipt, and get the file path
-            var receiptFilePath = feeReceiptService.GenerateReceipt(model);
-            // Return a downloadable file response
-            return File(receiptFilePath, "application/pdf", "FeeReceipt.pdf");
-            //return RedirectToAction("Index", "Home");
+            
+            return RedirectToAction("FeeSubmissionAlert", model);
+
         }
 
         [HttpGet]
-        public IActionResult DownloadReceipt()
+        public IActionResult FeeSubmissionAlert(FeeDetails model)
         {
-            return View();
+            //this method will give us alert about fee deposit
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult DownloadReceipt(FeeDetails feeDetails)
+        {
+            //retrive pdf path
+            var receiptFilePath = feeReceiptService.GenerateReceipt(feeDetails);
+            // Return a downloadable file response
+            return File(receiptFilePath, "application/pdf", "FeeReceipt.pdf"); 
+        }
+
+        [HttpGet]
+        public IActionResult DownloadAllFeeDetails(int id)
+        {
+            var receiptFilePath = feeReceiptService.GenerateReceiptForStudent(id);
+            return File(receiptFilePath, "application/pdf", "FeeReceipt.pdf");
         }
 
         [HttpGet]

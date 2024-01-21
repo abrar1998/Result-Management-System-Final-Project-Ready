@@ -127,9 +127,18 @@
               <hr />
         </td>
         <td>
-            <a class="btn btn-primary" asp-action="DepositFee" asp-controller="Fees" asp-route-id="@item.StudentId">Deposit Fee</a>
-            <hr />
-            <a class="btn btn-outline-warning" asp-action="GetFeeListOfSingleStudent" asp-controller="Fees" asp-route-id="@item.StudentId">Check Fee Details</a>
+            <div class="col-4">
+                <a class="btn btn-primary" asp-action="DepositFee" asp-controller="Fees" asp-route-id="@item.StudentId">Deposit Fee</a>
+                <hr />
+                <a class="btn btn-outline-warning" asp-action="GetFeeListOfSingleStudent" asp-controller="Fees" asp-route-id="@item.StudentId">Check Fee Details</a>
+                <hr />
+
+            </div>
+        </td>
+        <td>
+            <div class="col-4">
+                <a class="btn btn-primary" asp-action="DownloadAllFeeDetails" asp-controller="Fees" asp-route-id="@item.StudentId">Download Fee Record</a>
+            </div>
         </td>
 
         </div>
