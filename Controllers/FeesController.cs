@@ -51,7 +51,6 @@ namespace RMS.Controllers
         [HttpGet]
         public IActionResult CheckFee()
         {
-
             var data = feeRepo.GetFeeList();
             return View(data);
         }

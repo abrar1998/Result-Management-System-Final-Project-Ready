@@ -1,15 +1,13 @@
 ﻿@model RMS.Models.Student
+<br />
+<div class="text-md-center">
+    <h4 class="alert alert-danger">Are you sure you want to delete this?</h4>
+</div>
 
-@{
-    ViewData["Title"] = "Delete";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
+<hr />
 
-<h1>Delete</h1>
-
-<h3>Are you sure you want to delete this?</h3>
 <div>
-    <h4>Student</h4>
+    
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
@@ -78,6 +76,5 @@
 
     <form asp-action="Delete">
         <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="ShowStudents">Back to List</a>
     </form>
 </div>

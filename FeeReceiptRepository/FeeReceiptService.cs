@@ -10,6 +10,7 @@ using iText.Kernel.Colors;
 using iText.Kernel.Font;
 using iText.Layout.Properties;
 using iText.IO.Font.Constants;
+using iTextSharp.text.pdf.draw;
 
 
 
@@ -44,32 +45,49 @@ namespace RMS.FeeReceiptRepository
                         // Set up fonts and colors
                         var boldFont = FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 12, BaseColor.BLACK);
 
-                        // Create a new Paragraph with the title
+                        // Add a heading for SoftStacks Technologies
+                        var companyHeadingParagraph = new Paragraph("SoftStacks Technologies", new Font(FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 16, BaseColor.BLUE)))
+                        {
+                            Alignment = iTextSharp.text.Element.ALIGN_CENTER,
+                            SpacingAfter = 10
+                        };
+
+                        // Create a new Paragraph with the title Fee Receipt
                         var titleParagraph = new Paragraph("Fee Receipt", new Font(FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 18, BaseColor.RED)))
                         {
-                            Alignment = iTextSharp.text.Element.ALIGN_CENTER
+                            Alignment = iTextSharp.text.Element.ALIGN_CENTER, SpacingAfter = 10
                         };
 
                         // Set the spacing after the paragraph
                         titleParagraph.SpacingAfter = 20;
 
+                        // Add the title paragraph to the document
+                      
+
+                        // Add a heading for Student Fee Details
+                        var headingParagraph = new Paragraph("Student Fee Details", new Font(FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 14, BaseColor.BLACK)))
+                        {
+                            Alignment = iTextSharp.text.Element.ALIGN_CENTER,
+                            SpacingAfter = 10
+                        };
+
+                       
+
+
                         // Open the document for writing
                         document.Open();
 
                         // Add the title paragraph to the document
+                        document.Add(companyHeadingParagraph);
                         document.Add(titleParagraph);
+                        document.Add(headingParagraph);
 
-                        // Add student information
-                        document.Add(new Paragraph($"Student Id: {feeDetails.StudentId}", boldFont));
-
-                        if (student != null)
-                        {
-                            document.Add(new Paragraph($"Student Name: {student.StudentName}", boldFont));
-                        }
-
-
-                        // Create a table with three columns
-                        var table = new PdfPTable(3);
+                        // Create a table with four columns
+                        var table = new PdfPTable(5);
+                        table.SetTotalWidth(new float[] { 50, 100, 70, 150, 80 }); // Adjust the widths as needed
+                        table.LockedWidth = true; // Lock the width to make sure it respects the total width
+                        table.TotalWidth = 550f;
+                        
 
                         // Set up table headers
                         var headerCell1 = new PdfPCell(new Phrase("Id", boldFont));
@@ -87,14 +105,41 @@ namespace RMS.FeeReceiptRepository
                         headerCell3.HorizontalAlignment = iTextSharp.text.Element.ALIGN_CENTER;
                         table.AddCell(headerCell3);
 
+                        var headerCell4 = new PdfPCell(new Phrase("Description", boldFont)); // Corrected the variable name here
+                        headerCell4.BackgroundColor = BaseColor.LIGHT_GRAY;
+                        headerCell4.HorizontalAlignment = iTextSharp.text.Element.ALIGN_CENTER;
+                        table.AddCell(headerCell4);
+
+                        var headerCell5 = new PdfPCell(new Phrase("Date Paid", boldFont));
+                        headerCell5.BackgroundColor = BaseColor.LIGHT_GRAY;
+                        headerCell5.HorizontalAlignment = iTextSharp.text.Element.ALIGN_CENTER;
+                        table.AddCell(headerCell5);
+
                         // Add data to the table
                         table.AddCell(new PdfPCell(new Phrase(feeDetails.StudentId.ToString(), boldFont)) { HorizontalAlignment = iTextSharp.text.Element.ALIGN_CENTER });
                         table.AddCell(new PdfPCell(new Phrase(feeDetails.Student?.StudentName ?? "N/A", boldFont)) { HorizontalAlignment = iTextSharp.text.Element.ALIGN_CENTER });
                         table.AddCell(new PdfPCell(new Phrase(feeDetails.TotalFee, boldFont)) { HorizontalAlignment = iTextSharp.text.Element.ALIGN_CENTER });
+                        table.AddCell(new PdfPCell(new Phrase(feeDetails.Description ?? "N/A", boldFont)) { HorizontalAlignment = iTextSharp.text.Element.ALIGN_CENTER });
+                        table.AddCell(new PdfPCell(new Phrase(feeDetails.RegistrationDate.ToString(), boldFont)) { HorizontalAlignment = iTextSharp.text.Element.ALIGN_CENTER });
 
                         // Add the table to the document
                         document.Add(table);
 
+                        // Add a line separator after the table
+                        var lineSeparator = new LineSeparator(1, 100, BaseColor.BLACK, iTextSharp.text.Element.ALIGN_CENTER, -5);
+                        document.Add(lineSeparator);
+
+                        // Add a space or blank line for visual separation
+                        document.Add(new Paragraph(" "));
+
+                        // Add a prompt for the signature
+                        var signaturePrompt = new Paragraph("Authorized Signature", new Font(FontFactory.GetFont(FontFactory.HELVETICA, 12, BaseColor.BLACK)))
+                        {
+                            Alignment = iTextSharp.text.Element.ALIGN_RIGHT,
+                            SpacingBefore = 10
+                        };
+
+                        document.Add(signaturePrompt);
 
                         // Add a thank you message
                         document.Add(new Paragraph("Thank you for your payment!", boldFont));

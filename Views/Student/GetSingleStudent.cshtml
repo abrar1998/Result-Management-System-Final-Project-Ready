@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<RMS.Models.Student>
 <br />
 <div class="text-md-center">
-    <h4 class="alert alert-primary">Details of Single Studen</h4>
+    <h4 class="alert alert-primary">Details of Single Students</h4>
 </div>
 
 <hr />
@@ -90,7 +90,7 @@
                         <img src="~/Images/@item.StudentPhoto" class="img-fluid" width="100" height="100" asp-append-version="true" />
                     </td>
 
-                    <td>
+                @*     <td>
                         <a class="btn btn-primary" asp-action="Edit" asp-controller="Student" asp-route-id="@item.StudentId">Edit</a>
                         <hr />
                         <a class="btn btn-danger" asp-action="Delete" asp-controller="Student" asp-route-id="@item.StudentId">Delete</a>
@@ -103,11 +103,40 @@
                         <a class="btn btn-primary" asp-action="DepositFee" asp-controller="Fees" asp-route-id="@item.StudentId">Deposit Fee</a>
                         <hr />
                         <a class="btn btn-outline-warning" asp-action="GetFeeListOfSingleStudent" asp-controller="Fees" asp-route-id="@item.StudentId">Check Fee Details</a>
-                    </td>
+                    </td> *@
                 </tr>
+
+                <div class="row">
+        <td>
+            <div class="col-4">
+                <a class="btn btn-primary" asp-action="Edit" asp-controller="Student" asp-route-id="@item.StudentId">Edit</a>
+                
+            </div>
+            <hr />
+            
+            <div class="col-4">
+                <a class="btn btn-danger" asp-action="Delete" asp-controller="Student" asp-route-id="@item.StudentId">Delete</a>
+                
+                
+            </div>
+            <hr />
+            <div class="col-4">
+                <a class="btn btn-primary" asp-action="DownloadCourse" asp-controller="Student" asp-route-id="@item.StudentId">Course PDF</a>
+              
+            </div>
+              <hr />
+        </td>
+        <td>
+            <a class="btn btn-primary" asp-action="DepositFee" asp-controller="Fees" asp-route-id="@item.StudentId">Deposit Fee</a>
+            <hr />
+            <a class="btn btn-outline-warning" asp-action="GetFeeListOfSingleStudent" asp-controller="Fees" asp-route-id="@item.StudentId">Check Fee Details</a>
+        </td>
+
+        </div>
             }
         </tbody>
     </table>
+    <hr />
 
 
 
