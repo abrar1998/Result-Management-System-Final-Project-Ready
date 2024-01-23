@@ -1,4 +1,5 @@
 ﻿using RMS.Models;
+using static iText.StyledXmlParser.Jsoup.Select.Evaluator;
 
 namespace RMS.FeeRepository
 {
@@ -16,6 +17,12 @@ namespace RMS.FeeRepository
         void FeeToUpdate(FeeDetails ufee);
 
         void FeeDelete(FeeDetails deleteFee);
-        
+
+        DateOnly? GetFeeRegistrationDate(int id);
+
+        FeeDetails GetRegistrationDate(int studentId);
+
+
+
     }
 }

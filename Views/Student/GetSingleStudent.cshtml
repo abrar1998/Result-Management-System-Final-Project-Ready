@@ -140,7 +140,14 @@
                 <a class="btn btn-primary" asp-action="DownloadAllFeeDetails" asp-controller="Fees" asp-route-id="@item.StudentId">Download Fee Record</a>
             </div>
         </td>
-
+        <td>
+            <div class="col-4">
+                @if(ViewBag.Button == true)
+                {
+                    <a class="btn btn-danger" asp-action="DepositFee" asp-controller="Fees" asp-route-id="@item.StudentId">Account Balance Low</a>
+                }
+            </div>
+        </td>
         </div>
             }
         </tbody>

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RMS.AccountRepository;
 using RMS.DatabaseContext;
+using RMS.FeeRepository;
 using RMS.Models;
 using RMS.StudentCourseRepository;
 
@@ -11,12 +12,14 @@ namespace RMS.Controllers
         private readonly IStudentRepo repo;
         private readonly IWebHostEnvironment webHostEnvironment;
         private readonly ICourseRepo courseRepo;
+        private readonly IFeeRepo feeRepo;
 
-        public StudentController(IStudentRepo repo, IWebHostEnvironment webHostEnvironment, ICourseRepo courseRepo)
+        public StudentController(IStudentRepo repo, IWebHostEnvironment webHostEnvironment, ICourseRepo courseRepo, IFeeRepo feeRepo)
         {
             this.repo = repo;
             this.webHostEnvironment = webHostEnvironment;
             this.courseRepo = courseRepo;
+            this.feeRepo = feeRepo;
         }
 
         [HttpGet]
@@ -95,18 +98,49 @@ namespace RMS.Controllers
         [HttpGet]
         public async Task<IActionResult> GetSingleStudent(int id)
         {
+            
+
+
+            //var currentDate = DateOnly.FromDateTime(DateTime.UtcNow.Date);
+            DateTime currentDate = DateTime.Now;
+           // DateTime curdt = System.Convert.ToDateTime(currentDate);
+            // Assuming registrationDate is a DateOnly?
+            var registrationDate = feeRepo.GetFeeRegistrationDate(id);
+            //DateTime old = System.Convert.ToDateTime(registrationDate.Value.DayNumber);
+
+            if (registrationDate != null)
+            {
+                //var daysDifference = DaysBetween(registrationDate.Value, currentDate);
+                var daysDifference = currentDate.Day - registrationDate.Value.Day;
+                Console.WriteLine("Date difference is " + daysDifference);
+                // Now you can use the daysDifference as needed
+                if (daysDifference > 30)
+                {
+                    // Enable the button or take other actions
+                    ViewBag.Button = true;
+                }
+                else
+                {
+                    // Button remains disabled or take other actions
+                    ViewBag.Button = false;
+                }
+            }
+           
+            //////////////////
             var data = await repo.GetStudentandCourseJoinById(id);
             return View(data);
         }
 
+      
 
 
-       
 
 
-       //// CRUD OPERTAIONS ON SUDENTS
 
-       [HttpGet]
+
+        //// CRUD OPERTAIONS ON SUDENTS
+
+        [HttpGet]
        public async Task<IActionResult> Delete(int id)
        {
             var data = await repo.GetStudentCourseJoinModelById(id);

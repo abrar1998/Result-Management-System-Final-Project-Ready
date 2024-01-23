@@ -1,6 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using iText.Commons.Actions.Contexts;
+using Microsoft.EntityFrameworkCore;
+using Org.BouncyCastle.Asn1.Cmp;
 using RMS.DatabaseContext;
 using RMS.Models;
+using static iText.StyledXmlParser.Jsoup.Select.Evaluator;
 
 namespace RMS.FeeRepository
 {
@@ -68,5 +71,33 @@ namespace RMS.FeeRepository
             var data = context.feeDetails.Where(f=>f.StudentId == id).ToList();
             return data;
         }
-    }
+
+        public DateOnly? GetFeeRegistrationDate(int id)
+        {
+            var feeDetails = context.feeDetails
+                  .Where(f => f.StudentId == id)
+                  .Select(f => f.RegistrationDate)
+                  .FirstOrDefault();
+
+            return feeDetails;
+        }
+
+        public FeeDetails GetRegistrationDate(int studentId)
+        {
+            return context.feeDetails
+              .Where(f => f.StudentId == studentId)
+              .FirstOrDefault();
+        }
+
+        /* DateOnly? IFeeRepo.GetFeeRegistrationDate(int studentId)
+         {
+             throw new NotImplementedException();
+         }*/
+
+
+      
+
+
+
+}
 }
