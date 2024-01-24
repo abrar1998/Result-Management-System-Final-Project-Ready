@@ -26,14 +26,21 @@ namespace RMS.Models
         [Required]
         public string StudentPhone { get; set; }
 
+        public string Address { get; set; }
+
+        public string? AddressProof { get; set; }
+
         [Required]
         public string Adhaar { get; set; }
 
+        
 
         [Display(Name = "Date of Birth")]
         [DataType(DataType.Date)]
         [Required]
         public DateTime DOB { get; set; }
+        [Required]
+        public string Gender { get; set; }
 
         [DataType(DataType.Date)]
         public DateOnly RegistrationDate { get; set; } = DateOnly.FromDateTime(DateTime.UtcNow.Date);

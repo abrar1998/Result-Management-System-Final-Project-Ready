@@ -35,6 +35,8 @@ namespace RMS.Controllers
             if (ModelState.IsValid)
             {
                 string FileLocation = UploadFile(svm);
+             
+                string DocumentLocation = UploadDocument(svm);
 
                 var student = new Student()
                 {
@@ -47,6 +49,9 @@ namespace RMS.Controllers
                     Course = svm.Course,
                     StudentPhone = svm.StudentPhone,
                     StudentPhoto = FileLocation,
+                    AddressProof = DocumentLocation,
+                    Address = svm.Address,
+                    Gender = svm.Gender,
                 };
 
                 await repo.RegisterStudent(student);
@@ -58,7 +63,7 @@ namespace RMS.Controllers
 
 
 
-
+        //for photo
         private string UploadFile(StudentViewModel vm)
         {
             string filename = null;
@@ -75,6 +80,22 @@ namespace RMS.Controllers
             return filename;
         }
 
+        //for address photo
+        private string UploadDocument(StudentViewModel vm)
+        {
+            string filename = null;
+            if (vm.AddressProof != null && vm.AddressProof.Length < 1048576)
+            {
+                string filedir = Path.Combine(webHostEnvironment.WebRootPath, "AddressProof");
+                filename = Guid.NewGuid().ToString() + "-" + vm.AddressProof.FileName;
+                string filepath = Path.Combine(filedir, filename);
+                using (var filestream = new FileStream(filepath, FileMode.Create))
+                {
+                    vm.AddressProof.CopyTo(filestream);
+                }
+            }
+            return filename;
+        }
 
 
         [HttpGet]
@@ -157,14 +178,16 @@ namespace RMS.Controllers
             {
                 //Retrieve file path
                 var imagepath = Path.Combine(webHostEnvironment.WebRootPath, "Images", dataTodelete.StudentPhoto);
+                var addressfile = Path.Combine(webHostEnvironment.WebRootPath, "AddressProof", dataTodelete.AddressProof);
 
                 //delete student from database
                 await repo.DeleteStudent(dataTodelete);
 
                 //now delte deleted students photo in wwwroot folder
-                if (System.IO.File.Exists(imagepath))
+                if (System.IO.File.Exists(imagepath) && System.IO.File.Exists(addressfile))
                 {
                     System.IO.File.Delete(imagepath);
+                    System.IO.File.Delete(addressfile);
                 }
 
                 return RedirectToAction("ShowStudents", "Student");
@@ -186,89 +209,129 @@ namespace RMS.Controllers
       }
 
 
-     [HttpPost,ActionName("Edit")]
-     public async Task<IActionResult> Edit(int id, [Bind("StudentId,StudentName,Parentage,StudentAge,StudentEmail,StudentPhone,Adhaar,DOB,,StudentPhoto, Course")] StudentViewEdit student, IFormFile? newPhoto)
-     {
-         if (id != student.StudentId)
-         {
-             return NotFound();
-         }
+        [HttpPost, ActionName("Edit")]
+        public async Task<IActionResult> Edit(int id, [Bind("StudentId,StudentName,Parentage,StudentAge,StudentEmail,StudentPhone,Adhaar,DOB,,StudentPhoto, Course, Address, AddressProof, Gender")] StudentViewEdit student, IFormFile? newPhoto, IFormFile? newdocument)
+        {
+            if (id != student.StudentId)
+            {
+                return NotFound();
+            }
 
             var oldstudent = await repo.GetStudentCourseJoinModelById(id);
-         // oldstudent.StudentName = student.StudentName;
+            // oldstudent.StudentName = student.StudentName;
 
 
-         if (ModelState.IsValid)
-         {
-             // Handle new photo upload if the user wants to change the photo
-             if (newPhoto != null && newPhoto.Length > 0)
-             {
-                 // Handle the new photo upload here
-                 // Save the new photo to the wwwroot/Images folder or any other location
+            if (ModelState.IsValid)
+            {
+                // Handle new photo upload if the user wants to change the photo
+                if (newPhoto != null && newPhoto.Length < 1048576)
+                {
+                    // Handle the new photo upload here
+                    // Save the new photo to the wwwroot/Images folder or any other location
 
-                 var uniqueFileName = GetUniqueFileName(newPhoto.FileName);
+                    var uniqueFileName = GetUniqueFileName(newPhoto.FileName);
 
 
-                 var uploads = Path.Combine(webHostEnvironment.WebRootPath, "images");
-                 var filePath = Path.Combine(uploads, uniqueFileName);
+                    var uploads = Path.Combine(webHostEnvironment.WebRootPath, "images");
+                    var filePath = Path.Combine(uploads, uniqueFileName);
 
-                 using (var fileStream = new FileStream(filePath, FileMode.Create))
-                 {
-                     await newPhoto.CopyToAsync(fileStream);
-                 }
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await newPhoto.CopyToAsync(fileStream);
+                    }
 
-                 // Update the student's StudentPhoto property with the new file name or path
-                 student.StudentPhoto = uniqueFileName;
-                 // string oldPhotoPath = oldstudent.StudentPhoto;
-                 string oldPhotoPath = Path.Combine(webHostEnvironment.WebRootPath, "Images", oldstudent.StudentPhoto);
+                    // Update the student's StudentPhoto property with the new file name or path
+                    student.StudentPhoto = uniqueFileName;
+                    // string oldPhotoPath = oldstudent.StudentPhoto;
+                    string oldPhotoPath = Path.Combine(webHostEnvironment.WebRootPath, "Images", oldstudent.StudentPhoto);
 
-                 // You might want to delete the old photo if it's no longer needed
-                 // Note: Ensure you have proper error handling and file deletion logic
-                 // For example, you might want to check if the old photo exists before deleting
-                 // var oldPhotoPath = Path.Combine(uploads, student.StudentPhoto);
-                 if (System.IO.File.Exists(oldPhotoPath))
-                 {
-                     System.IO.File.Delete(oldPhotoPath);
-                 }
-             }
+                    // You might want to delete the old photo if it's no longer needed
+                    // Note: Ensure you have proper error handling and file deletion logic
+                    // For example, you might want to check if the old photo exists before deleting
+                    // var oldPhotoPath = Path.Combine(uploads, student.StudentPhoto);
+                    if (System.IO.File.Exists(oldPhotoPath))
+                    {
+                        System.IO.File.Delete(oldPhotoPath);
+                    }
+                }
 
-             oldstudent.StudentName = student.StudentName;
-             oldstudent.StudentId = student.StudentId;
+                if(newdocument !=null && newdocument.Length < 1048576)
+                {
+                    var DocumentUniqueName = GetUniqueFileName(newdocument.FileName);
+                    var uploadPath = Path.Combine(webHostEnvironment.WebRootPath, "AddressProof");
+                    var DocumentFile = Path.Combine(uploadPath, DocumentUniqueName);
 
-             oldstudent.StudentPhone = student.StudentPhone;
-             oldstudent.StudentEmail = student.StudentEmail;
-             oldstudent.Course = oldstudent.Course;
-             oldstudent.DOB = student.DOB;
-             oldstudent.Adhaar = student.Adhaar;
-             //oldstudent.StudentPhoto = student.StudentPhoto;
-             if (newPhoto != null)
-             {
-                 oldstudent.StudentPhoto = student.StudentPhoto;
-             }
-             else
-             {
-                 oldstudent.StudentPhoto = oldstudent.StudentPhoto;
-             }
-             oldstudent.Course = student.Course;
+                    using(var filestream = new FileStream(DocumentFile, FileMode.Create))
+                    {
+                        await newdocument.CopyToAsync(filestream);
+                    }
+
+                    student.AddressProof = DocumentUniqueName;
+
+                    if(!String.IsNullOrEmpty(student.AddressProof))
+                    {
+                        var oldDocument = Path.Combine(webHostEnvironment.WebRootPath, "AddressProof", oldstudent.AddressProof);
+                        if(System.IO.File.Exists(oldDocument))
+                        {
+                            System.IO.File.Delete(oldDocument);
+                        }
+                    }
+
+                }
+
+                oldstudent.StudentName = student.StudentName;
+                oldstudent.StudentId = student.StudentId;
+
+                oldstudent.StudentPhone = student.StudentPhone;
+                oldstudent.StudentEmail = student.StudentEmail;
+                oldstudent.Course = oldstudent.Course;
+                oldstudent.DOB = student.DOB;
+                oldstudent.Adhaar = student.Adhaar;
+                oldstudent.Course = student.Course;
+                oldstudent.Gender = student.Gender;
+                //oldstudent.StudentPhoto = student.StudentPhoto;
+                if (newPhoto != null)
+                {
+                    oldstudent.StudentPhoto = student.StudentPhoto;
+                }
+                else
+                {
+                    oldstudent.StudentPhoto = oldstudent.StudentPhoto;
+                }
+
+                if(newdocument !=null)
+                {
+                    oldstudent.AddressProof = student.AddressProof;
+                }
+                else
+                {
+                    oldstudent.AddressProof = oldstudent.AddressProof;
+                }
+                
 
                 //now update the student using repository in database
                 await repo.UpdateStudent(oldstudent);
-             
-             return RedirectToAction("ShowStudents", "Student");
-         }
-         else
-         {
-             foreach (var modelState in ModelState.Values)
-             {
-                 foreach (var error in modelState.Errors)
-                 {
-                     Console.WriteLine($"Model Error: {error.ErrorMessage}");
-                 }
-             }
-         }
 
-         return View();
-     }
+                return RedirectToAction("ShowStudents", "Student");
+            }
+            else
+            {
+                foreach (var modelState in ModelState.Values)
+                {
+                    foreach (var error in modelState.Errors)
+                    {
+                        Console.WriteLine($"Model Error: {error.ErrorMessage}");
+                    }
+                }
+            }
+
+            return View();
+        }
+
+
+
+
+
 
 
 

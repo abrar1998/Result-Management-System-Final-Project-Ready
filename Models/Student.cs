@@ -30,6 +30,9 @@ namespace RMS.Models
         [Required]
         public string Adhaar { get; set; }
 
+        [Required]
+        public string Gender { get; set; }
+
 
         [Display(Name = "Date of Birth")]
         [DataType(DataType.Date)]
@@ -41,10 +44,20 @@ namespace RMS.Models
 
         public string StudentPhoto { get; set; }
 
+
+        ///property for Address Proof
+        public string Address {  get; set; }
+
+        public string AddressProof {  get; set; }
+
         public int Course { get; set; }
         [ForeignKey("Course")]
         public Course CourseList { get; set; }
 
         public List<FeeDetails> FeeDetails { get; set; }
+
+        ///property for Address Proof
+        //public string Address {  get; set; }
+
     }
 }

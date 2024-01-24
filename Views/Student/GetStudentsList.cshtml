@@ -43,7 +43,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Course)
             </th>
-            <th></th>
+            <th>
+                @Html.DisplayNameFor(model => model.AddressProof)
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -78,13 +80,27 @@
                     @* @Html.DisplayFor(modelItem => item.StudentPhoto) *@
                     <img src="~/Images/@item.StudentPhoto" class="img-fluid" width="150" height="150" asp-append-version="true" />
                 </td>
+              
                 <td>
                     @Html.DisplayFor(modelItem => item.CourseList.CourseName)
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) 
-                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) 
-                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                    @* @Html.DisplayFor(modelItem => item.StudentPhoto) *@
+                    <img src="~/AddressProof/@item.AddressProof" class="img-fluid" width="150" height="150" asp-append-version="true" /> 
+
+               
+                       @*  @if (!string.IsNullOrEmpty(item.AddressProof))
+                        {
+                        <img src="@Url.Content("~/AddressProof/" + item.AddressProof)" class="img-fluid" width="150" height="150" asp-append-version="true" />
+                        } *@
+                
+
+
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id=item.StudentId })
+                    @Html.ActionLink("Details", "Details", new { id = item.StudentId })
+                    @Html.ActionLink("Delete", "Delete", new { id = item.StudentId })
                 </td>
             </tr>
         }

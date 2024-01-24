@@ -32,11 +32,21 @@ namespace RMS.Models
         [Required]
         public string Adhaar { get; set; }
 
+        [Required]
+        public string Address { get; set; }
+
+        [Display(Name ="Upload Adhaar/Domicile Photo")]
+        [Required(ErrorMessage ="Please Upload any Identity Proof Document")]
+        public IFormFile AddressProof { get; set; }
+
 
         [Display(Name = "Date of Birth")]
         [DataType(DataType.Date)]
         [Required]
         public DateTime DOB { get; set; }
+
+        [Required]
+        public string Gender {  get; set; }
 
         [Required]
         public int Course { get; set; }

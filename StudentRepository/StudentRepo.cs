@@ -15,23 +15,6 @@ namespace RMS.AccountRepository
             this.context = context;
         }
 
-      
-       /* public async Task RegisterCourse(Course cor)
-        {
-            if(cor !=null)
-            {
-                await context.courses.AddAsync(cor);
-                await context.SaveChangesAsync();
-            }
-        }
-
-
-        public List<Course> GetCourseList()
-        {
-            var data =  context.courses.ToList();
-            return data;
-        }*/
-
 
         public async Task RegisterStudent(Student stud)
         {
@@ -54,7 +37,7 @@ namespace RMS.AccountRepository
         public async Task<IEnumerable<Student>> GetStudentandCourseJoinById(int id)
         {
 
-            var data = await context.Students.Include(c => c.CourseList).Where(x => x.StudentId == id).ToListAsync();
+            var data = await context.Students.Where(x => x.StudentId == id).Include(c => c.CourseList).ToListAsync();
             return data;
         }
 
@@ -93,6 +76,9 @@ namespace RMS.AccountRepository
                              RegistrationDate = s.RegistrationDate,
                              Course = s.Course,
                              StudentPhoto = s.StudentPhoto,
+                             Address = s.Address,
+                             AddressProof = s.AddressProof,
+                             Gender = s.Gender,
 
                          })
                         .FirstOrDefaultAsync();
